@@ -8,8 +8,9 @@ import * as Yup from "yup";
 import { pageTitle } from "../../_mock/helperIndex";
 import handwave from '../../images/handwave.png';
 import Loading from "../MainLayout/Loading";
+import { signinRequest } from "../../store/Register/slice";
 
-export default function Signin({ setIsAuthenticated }) {
+export default function Signin() {
     pageTitle('Signin');
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -21,12 +22,6 @@ export default function Signin({ setIsAuthenticated }) {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
-
-
-    const handleSubmit = (values) => {
-
-    }
-
 
     return (
         <div className="al_login_container">
@@ -48,7 +43,7 @@ export default function Signin({ setIsAuthenticated }) {
                         .required("Password is required"),
                 })}
                 onSubmit={(values) => {
-                    handleSubmit(values);
+                    dispatch(signinRequest({ values, navigate }))
                 }}
             >
                 {({ setFieldValue }) => {

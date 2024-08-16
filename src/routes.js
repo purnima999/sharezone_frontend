@@ -20,7 +20,7 @@ const Profile = React.lazy(() => import("./components/InnerApp/Profile/ProfileMa
 const Dashboard = React.lazy(() => import("./components/InnerApp/Dashboard/Dashboard"));
 const ShareZone = React.lazy(() => import("./components/InnerApp/ShareZone/sharezoneManager"))
 
-const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
+const AllRoutes = (isAuthUser) => {
   const { pathname } = useLocation();
   const [loading, setLoading] = useState(true);
 
@@ -35,11 +35,12 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
     return <Loading />;
   }
 
+
   return (
     <>
       <ToastContainer theme="light" />
       <Routes>
-        {authenticated ? (
+        {isAuthUser ? (
           <>
             <Route path="/" element={<MainLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
@@ -52,7 +53,7 @@ const AllRoutes = ({ authenticated, setIsAuthenticated }) => {
           <>
             <Route path="/" element={<About />} />
             <Route path="/" element={<NonAuthLayout />}>
-              <Route path="signin" element={<Signin setIsAuthenticated={setIsAuthenticated} />} />
+              <Route path="signin" element={<Signin />} />
               <Route path="register" element={<Register />} />
               <Route path="forgotpassword" element={<ForgotPassword />} />
               <Route path="*" element={<ErrorPage />} />

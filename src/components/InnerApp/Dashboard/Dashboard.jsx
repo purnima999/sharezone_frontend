@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardBody, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
+import { getZonesbyEmailIdRequest } from '../../../store/ShareZone/slice';
 
 export default function Dashboard1() {
+    const dispatch = useDispatch();
 
     const [tab, setTab] = useState("1");
+
+    useEffect(() => {
+        dispatch(getZonesbyEmailIdRequest())
+    }, []);
+
+    const { zoneData } = useSelector((state) => (state.shareZoneSlice));
 
     return (
         <>
@@ -45,24 +54,21 @@ export default function Dashboard1() {
                     <TabContent activeTab={tab}>
                         <TabPane tabId="1" className="al_card_diff">
                             <Row>
-                                <Col lg="2" sm="3">
-                                    <Card>
-                                        <CardBody>
-                                            <div className='mb-3'>Room1</div>
-                                            <img src={""} alt="" />
-                                            <div className='d-flex align-items-baseline mt-3'>Description:Software Engineer</div>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col lg="2" sm="3">
-                                    <Card>
-                                        <CardBody>
-                                            <div className='mb-3'>Room2</div>
-                                            <img src={""} alt="" />
-                                            <div className='d-flex align-items-baseline mt-3'>Description:Software Engineer</div>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
+                                {zoneData && zoneData?.map((x) => {
+                                    return (
+                                        <>
+                                            <Col lg="2" sm="3">
+                                                <Card>
+                                                    <CardBody>
+                                                        <div className='mb-3'>{x?.roomname}</div>
+                                                        <img src={""} alt="" />
+                                                        <div className='d-flex align-items-baseline mt-3'>Description:Not available</div>
+                                                    </CardBody>
+                                                </Card>
+                                            </Col>
+                                        </>
+                                    )
+                                })}
                             </Row>
                         </TabPane>
                         <TabPane tabId="2" className="al_card_diff">
@@ -113,10 +119,18 @@ export default function Dashboard1() {
                     <div className='mt-3'>
                         <h6 className='mb-0'>Knowledge Bank</h6>
                         <Row className='mt-3 al_knowldgebank'>
-                            {/* <Col lg="2" sm="3">
-                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/TcJg4Dc_w90?si=k2yXOI4qMxa8AohV" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-                                <div className='mt-2'>Text of the printing and typesetting industry.</div>
-                            </Col> */}
+                            <Col lg="2" sm="3">
+                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/aZb0iu4uGwA?si=5ogHQZV_vloTJwgX" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                <div className='mt-2'>C language tutorial</div>
+                            </Col>
+                            <Col lg="2" sm="3">
+                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/aZb0iu4uGwA?si=5ogHQZV_vloTJwgX" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                <div className='mt-2'>Software Engineering Projects</div>
+                            </Col>
+                            <Col lg="2" sm="3">
+                                <iframe width="100%" height="105" src="https://www.youtube.com/embed/aZb0iu4uGwA?si=5ogHQZV_vloTJwgX" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                <div className='mt-2'>Programming Languages</div>
+                            </Col>
                         </Row>
                     </div>
                 </div>

@@ -23,7 +23,6 @@ export default function RegisterInfo() {
         initialValues={{
           username: actionData?.username || "",
           email: actionData?.email || "",
-          mobile: actionData?.mobile || "",
           password: actionData?.password || ""
         }}
         validationSchema={Yup.object().shape({
@@ -34,7 +33,7 @@ export default function RegisterInfo() {
             .max(50, "Maximum 50 characters are allowed")
             .email("Invalid email")
             .required("Email is required"),
-          mobile: Yup.string().required("Mobile number is required"),
+          // mobile: Yup.string().required("Mobile number is required"),
           password: Yup.string().required("Password is required")
         })}
         onSubmit={(values) => {
@@ -108,7 +107,7 @@ export default function RegisterInfo() {
                               className="text-danger"
                             />
                           </FormGroup>
-                          <FormGroup>
+                          {/* <FormGroup>
                             <Label>
                               <span className="requiredLabel">*</span>Mobile
                             </Label>
@@ -135,7 +134,7 @@ export default function RegisterInfo() {
                               component={"div"}
                               className="text-danger"
                             />
-                          </FormGroup>
+                          </FormGroup> */}
                         </div>
                         <div className="al_login_footer mt-3">
                           <button

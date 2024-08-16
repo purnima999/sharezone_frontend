@@ -2,14 +2,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-
+    isAuthUser: false
 };
 
 const registerSlice = createSlice({
     name: 'registerSlice',
     initialState,
     reducers: {
-        registrationRequest: () => { }
+        registrationRequest: () => { },
+        signinRequest: () => { },
+        signinResponse: (state, action) => {
+            state.isAuthUser = action?.payload?.isAuthUser
+            state.userDetails = action?.payload?.userDetails
+        }
     }
 });
 
@@ -17,7 +22,8 @@ const registerSlice = createSlice({
 const { actions, reducer } = registerSlice
 
 export const {
-    registrationRequest, registrationResponse
+    registrationRequest, registrationResponse,
+    signinRequest, signinResponse
 
 } = actions;
 

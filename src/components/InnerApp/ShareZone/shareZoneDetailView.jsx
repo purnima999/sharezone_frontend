@@ -1,7 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'reactstrap';
+import { getZonesbyEmailIdRequest } from '../../../store/ShareZone/slice';
+import moment from 'moment';
 
 const ShareZoneDetailView = () => {
+    const dispatch = useDispatch();
+
+    const { zoneData } = useSelector((state) => (state.shareZoneSlice));
+
+    useEffect(() => {
+        dispatch(getZonesbyEmailIdRequest())
+    }, []);
+
+    console.log("zoneDatazoneData", zoneData)
     return (
         <React.Fragment>
             <div className='wflexScroll d-flex flex-column mb-2'>
@@ -42,30 +54,24 @@ const ShareZoneDetailView = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><div className='al_text_link d-inline-block' >Zone1</div></td>
-                                <td>This is for class</td>
-                                <td>p1</td>
-                                <td>111</td>
-                                <td>
-                                    <div className='d-flex gap-2'>
-                                        <button type="button" className='al_button_sm al_savebtn'>Copy invite link</button>
-                                        <button type="button" className='al_button_sm al_testbtn'>Edit</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><div className='al_text_link d-inline-block' >Zone2</div></td>
-                                <td>This is for class</td>
-                                <td>p1</td>
-                                <td>111</td>
-                                <td>
-                                    <div className='d-flex gap-2'>
-                                        <button type="button" className='al_button_sm al_savebtn'>Copy invite link</button>
-                                        <button type="button" className='al_button_sm al_testbtn'>Edit</button>
-                                    </div>
-                                </td>
-                            </tr>
+                            {zoneData && zoneData?.map((x) => {
+                                return (
+                                    <>
+                                        <tr>
+                                            <td><div className='al_text_link d-inline-block' >{x.roomname}</div></td>
+                                            <td>This room is for Demo</td>
+                                            <td>only you</td>
+                                            <td>{moment(new Date()).format("MM-DD-YYYY")}</td>
+                                            <td>
+                                                <div className='d-flex gap-2'>
+                                                    <button type="button" className='al_button_sm al_savebtn'>Copy invite link</button>
+                                                    <button type="button" className='al_button_sm al_testbtn'>Edit</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </>
+                                )
+                            })}
                         </tbody>
                     </Table>
                 </div>
