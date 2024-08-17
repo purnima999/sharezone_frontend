@@ -11,14 +11,18 @@ const shareZoneSlice = createSlice({
         getZonesbyEmailIdRequest: () => { },
         getZonesbyEmailIdResponse: (state, action) => {
             state.zoneData = action?.payload
-        }
+        },
+        initiateCallRequest: () => { },
+        uploadFilesRequest: () => { }
     },
 });
 
 const { actions, reducer } = shareZoneSlice;
 export const {
     createZoneRequest,
-    getZonesbyEmailIdRequest, getZonesbyEmailIdResponse
+    getZonesbyEmailIdRequest, getZonesbyEmailIdResponse,
+    initiateCallRequest,
+    uploadFilesRequest
 } = actions;
 
 export default reducer;

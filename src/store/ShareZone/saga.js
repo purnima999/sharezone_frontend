@@ -4,7 +4,7 @@ import { call, put, select, takeLeading } from 'redux-saga/effects';
 import { callAPI, getActionTypes } from '../../_mock/internalJsControl';
 import store from '../store';
 import { setActionTypeAndActionData, setLoading } from '../UtilityCallFunction/slice';
-import { createZoneRequest, getZonesbyEmailIdResponse, getZonesbyEmailIdRequest } from './slice';
+import { createZoneRequest, getZonesbyEmailIdResponse, getZonesbyEmailIdRequest, initiateCallRequest, uploadFilesRequest } from './slice';
 
 
 function* getZones(action) {
@@ -74,9 +74,85 @@ function* crateZone(action) {
     store.dispatch(setLoading(false))
 }
 
+// Video call initiation saga
+function* initiateCall(action) {
+    alert("hlll")
+    store.dispatch(setLoading(true));
+    const { email } = action.payload;
+
+    try {
+        let response = yield call(callAPI, {
+            url: `http://127.0.0.1:8000/initiate-call/`,
+            method: 'POST',
+            data: { email },
+            contentType: 'application/json',
+        });
+
+        console.log("9797987979879", response)
+        if (response?.status && response?.statuscode === 200) {
+            toast(response?.message, {
+                position: "top-right",
+                type: "success",
+            });
+        } else {
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
+        }
+    } catch (error) {
+        toast(error?.response?.message || 'Failed to initiate call', {
+            position: "top-right",
+            type: "error",
+        });
+    }
+    yield
+    store.dispatch(setLoading(false));
+}
+
+// File upload saga
+function* uploadFiles(action) {
+    store.dispatch(setLoading(true));
+    const files = action.payload;
+    const formData = new FormData();
+
+    for (let file of files) {
+        formData.append('files', file);
+    }
+
+    try {
+        let response = yield call(callAPI, {
+            url: `http://127.0.0.1:8000/upload-files/`,
+            method: 'POST',
+            data: formData,
+            contentType: 'multipart/form-data',
+        });
+
+        if (response?.status && response?.statuscode === 200) {
+            toast(response?.message, {
+                position: "top-right",
+                type: "success",
+            });
+        } else {
+            toast(response?.message, {
+                position: "top-right",
+                type: "error",
+            });
+        }
+    } catch (error) {
+        toast(error?.response?.message || 'Failed to upload files', {
+            position: "top-right",
+            type: "error",
+        });
+    }
+    store.dispatch(setLoading(false));
+}
+
 function* watchShareZoneSaga() {
     yield takeLeading(getZonesbyEmailIdRequest.type, getZones)
     yield takeLeading(createZoneRequest.type, crateZone)
+    yield takeLeading(initiateCallRequest.type, initiateCall)
+    yield takeLeading(uploadFilesRequest.type, uploadFiles)
 }
 
 export default watchShareZoneSaga;

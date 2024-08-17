@@ -19,11 +19,13 @@ const About = React.lazy(() => import("./components/Pages/About"));
 const Profile = React.lazy(() => import("./components/InnerApp/Profile/ProfileManager"));
 const Dashboard = React.lazy(() => import("./components/InnerApp/Dashboard/Dashboard"));
 const ShareZone = React.lazy(() => import("./components/InnerApp/ShareZone/sharezoneManager"))
+const ShareZoneVedioInterface = React.lazy(() => import("./components/InnerApp/ShareZone/shareZoneVedioInterface"))
 
 const AllRoutes = (isAuthUser) => {
   const { pathname } = useLocation();
   const [loading, setLoading] = useState(true);
 
+  let { authenticated } = isAuthUser
   useEffect(() => {
     // window.scrollTo(0, 0);
     setTimeout(() => {
@@ -35,17 +37,19 @@ const AllRoutes = (isAuthUser) => {
     return <Loading />;
   }
 
+  console.log("isAuthUser", isAuthUser)
 
   return (
     <>
       <ToastContainer theme="light" />
       <Routes>
-        {isAuthUser ? (
+        {authenticated ? (
           <>
             <Route path="/" element={<MainLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="profile" element={<Profile />} />
               <Route path="sharezone" element={< ShareZone />} />
+              <Route path="sharezone_room" element={< ShareZoneVedioInterface />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
           </>

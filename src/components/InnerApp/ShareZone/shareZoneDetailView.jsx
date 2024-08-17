@@ -3,9 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Table } from 'reactstrap';
 import { getZonesbyEmailIdRequest } from '../../../store/ShareZone/slice';
 import moment from 'moment';
+import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
+import { useNavigate } from 'react-router';
 
 const ShareZoneDetailView = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const { zoneData } = useSelector((state) => (state.shareZoneSlice));
 
@@ -13,7 +16,11 @@ const ShareZoneDetailView = () => {
         dispatch(getZonesbyEmailIdRequest())
     }, []);
 
-    console.log("zoneDatazoneData", zoneData)
+    const handleRoomSelection = (roomname) => {
+        dispatch(setActionTypeAndActionData({ actionData: roomname }))
+        navigate("/sharezone_room")
+    }
+
     return (
         <React.Fragment>
             <div className='wflexScroll d-flex flex-column mb-2'>
@@ -58,7 +65,7 @@ const ShareZoneDetailView = () => {
                                 return (
                                     <>
                                         <tr>
-                                            <td><div className='al_text_link d-inline-block' >{x.roomname}</div></td>
+                                            <td><div className='al_text_link d-inline-block' onClick={() => handleRoomSelection(x.roomname)}>{x.roomname}</div></td>
                                             <td>This room is for Demo</td>
                                             <td>only you</td>
                                             <td>{moment(new Date()).format("MM-DD-YYYY")}</td>
@@ -66,6 +73,7 @@ const ShareZoneDetailView = () => {
                                                 <div className='d-flex gap-2'>
                                                     <button type="button" className='al_button_sm al_savebtn'>Copy invite link</button>
                                                     <button type="button" className='al_button_sm al_testbtn'>Edit</button>
+                                                    <button type="button" className="al_button_sm al_button_cancel">Delete</button>
                                                 </div>
                                             </td>
                                         </tr>

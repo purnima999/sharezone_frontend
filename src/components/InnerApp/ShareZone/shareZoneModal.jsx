@@ -29,7 +29,6 @@ const ShareZoneModal = () => {
             >{({ values,errors }) => (
                 <>
                     <Form>
-                        {console.log("979879879879879879989", values, errors)}
                         <Modal className='modal-sm detailsModal' isOpen={true} wrapClassName="al_outerparentwp">
                             <div className='d-flex align-items-center justify-content-between p-4'>
                                 <h6 className='mb-0'>Create Zone</h6>
