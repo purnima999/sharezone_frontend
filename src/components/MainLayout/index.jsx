@@ -6,6 +6,7 @@ import SideNav from './SideNav';
 import Topbar from './Topbar';
 import chatBot from '../../images/chatboticon.svg';
 import { Button, Popover, PopoverBody } from 'reactstrap';
+import EducationalChatBot from "../InnerApp/ChatBots/EducationalChatBot"
 
 export default function MainLayout() {
     const [botisOpen, setBotIsOpen] = useState(true);
@@ -27,7 +28,7 @@ export default function MainLayout() {
                             <Outlet />
                         </main>
                     </div>
-                    {botisOpen && <chatBot botisOpen={botisOpen} setBotIsOpen={setBotIsOpen} />}
+                    {botisOpen && <EducationalChatBot botisOpen={botisOpen} setBotIsOpen={setBotIsOpen} />}
                 </div>
             </Suspense>
         </div>

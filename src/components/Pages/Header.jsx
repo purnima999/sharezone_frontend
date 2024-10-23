@@ -19,7 +19,7 @@ export default function Header() {
               </div>
               <div className="cs_main_header_right">
                 <div className="cs_toolbox">
-                  <Link to="">View Source Code</Link>
+                  <Link target='blank' to="https://github.com/purnima999?tab=repositories">View Source Code</Link>
                   <Link to="/signin">Sign In</Link>
                 </div>
               </div>
