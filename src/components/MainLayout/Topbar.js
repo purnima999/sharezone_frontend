@@ -17,24 +17,6 @@ export default function Topbar(props) {
   const [getProfileDetails, setGetProfileDetails] = useState([]);
   const [isOpenModel, setOpenModel] = useState(false);
 
-  const profileDetails = async () => {
-    await AxiosInstance("application/json")
-      .get("/userdetails")
-      .then((res) => {
-        const responseData = res.data?.data;
-        setGetProfileDetails(responseData);
-      })
-      .catch((er) => console.log(er));
-  };
-
-  useEffect(() => {
-    profileDetails(); //Suspense loading with actual component
-    // setOpenModel(false);
-  }, []);
-
-  const handleProfile = () => {
-    navigate('profile')
-  }
   const handleLogOut = () => {
     localStorage.clear();
     sessionStorage.clear();
@@ -52,67 +34,6 @@ export default function Topbar(props) {
         { id: "1", name: "Home", link: "home", icon: "icon_alfred_home" },
       ],
     },
-    {
-      moduleId: "3",
-      name: "Behavioural",
-      link: "chat",
-      icon: "icon_alfred_bot",
-      subModules: [
-        {
-          id: "1",
-          name: "Behavioural Chat",
-          link: "chat",
-          icon: "icon_alfred_bot",
-        },
-      ],
-    },
-    {
-      moduleId: "4",
-      name: "Bot Manager",
-      link: "historychat",
-      icon: "icon_alfred_botquestionnaire",
-      subModules: [
-        {
-          id: "2",
-          name: "History Bot",
-          link: "historychat",
-          icon: "icon_alfred_botquestionnaire",
-        },
-        {
-          id: "3",
-          name: "Upload Document",
-          link: "uploaddocument",
-          icon: "icon_alfred_uploaddocument",
-        }
-      ],
-    },
-    {
-      moduleId: "5",
-      name: "Reports",
-      link: "transcriptsummary",
-      icon: "icon_alfred_reports",
-      subModules: [
-        {
-          id: "1",
-          name: "History Transcript Summary",
-          link: "transcriptsummary",
-          icon: "icon_alfred_reports",
-        },
-      ],
-    },
-    {
-      moduleId: '6',
-      name: 'User Management',
-      link: 'roles',
-      icon: 'icon_alfred_roles',
-      subModules: [
-        { id: "1", name: "Role Management", link: 'roles', icon: 'icon_alfred_roles' },
-        { id: "2", name: "Users", link: 'users', icon: 'icon_alfred_menu_client_user' },
-        { id: "3", name: "List of Patients", link: 'patientslist', icon: 'icon_alfred_patientslist' },
-        { id: "4", name: "Your Doctors", link: 'doctorslist', icon: 'icon_alfred_doctors' },
-        { id: "5", name: "Approve Users", link: 'approveusers', icon: 'icon_alfred_approveusers' }
-      ]
-    },
   ]
   const lPathName = useLocation().pathname;
   const sideMenu = menuData.find(s => '/' + s.link === lPathName?.replace('/*', '') || s.subModules.findIndex(y => '/' + y.link === lPathName?.replace('/*', '')) !== -1);
@@ -120,8 +41,6 @@ export default function Topbar(props) {
   const handleCloseAndOpen = () => {
     setOpenModel(!isOpenModel)
   }
-
-  const profilePicture = ((getProfileDetails?.profile_url === "NA") ? (getProfileDetails?.gender?.toLowerCase() === "female" ? femaleuserImg : maleuserImg) : getProfileDetails?.profile_url);
 
   return (
     <>
@@ -152,20 +71,6 @@ export default function Topbar(props) {
                       <img src={noNotifications} alt="" width={60} />
                       <div className='mt-3'>Clear notifications, just like a steady pulse—nothing new!</div>
                     </div>
-
-                    {/* <div className='al_nudegeitem'>
-                      <div>Dr. George has accepted your request to be as your primary doctor</div>
-                      <div>Dr. George has been removed as a primary doctor for you. Please choose your primary doctor from <Link to="/doctorslist" className='text-decoration-underline'>Your Doctors</Link> page</div>
-                      <div>
-                        <Row className='align-items-center'>
-                          <Col>John smith wants you to be his primary doctor.</Col>
-                          <div className='w-auto'>
-                            <button type="button" className='al_button_sm al_savebtn me-2'>Accept</button>
-                            <button type="button" className='al_button_sm al_cancelbgbutton'>Reject</button>
-                          </div>
-                        </Row>
-                      </div>
-                    </div> */}
                   </div>
                 </PopoverBody>
               </UncontrolledPopover>
@@ -176,7 +81,7 @@ export default function Topbar(props) {
                 <Dropdown isOpen={menu} toggle={() => setMenu(menu => !menu)}>
                   <DropdownToggle className="nav-link" tag="a">
                     <div className="al_progresscontainer">
-                      <img src={profilePicture} alt="user" className='al_useravatar al_avatar' />
+                      {/* <img src={profilePicture} alt="user" className='al_useravatar al_avatar' /> */}
                       <div className='al_progressbar'>
                         <CircularProgressbar
                           value={getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}
@@ -187,16 +92,15 @@ export default function Topbar(props) {
                           })}
                         />
                       </div>
-                      <div className='al_profilepercent'>{`${getProfileDetails?.profile_percentage >= 0 ? getProfileDetails?.profile_percentage : 0}%`}</div>
                     </div>
 
                     {/* <img src={user} alt="user" className='al_useravatar al_avatar' /> */}
                     <div className='d-flex flex-column ms-2 text-capitalize'>
-                      <span className='al_uName'>{getProfileDetails?.username}</span>
+                      <span className='al_uName'>{getProfileDetails?.username ||""}</span>
                     </div>
                   </DropdownToggle>
                   <DropdownMenu className="al_menu-card">
-                    <DropdownItem tag="div" onClick={() => handleProfile()} >Profile</DropdownItem>
+                    {/* <DropdownItem tag="div" onClick={() => handleProfile()} >Profile</DropdownItem> */}
                     <DropdownItem tag="div" onClick={() => handleLogOut()}>Logout</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>

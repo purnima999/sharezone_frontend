@@ -13,7 +13,7 @@ const SharezoneManager = () => {
   const { actionType } = useSelector((state) => (state?.utilityCallFunctionSlice));
 
   const modalOpenHandle = (data) => {
-    dispatch(setActionTypeAndActionData({ actionType: getActionTypes.SELECT }))
+    dispatch(setActionTypeAndActionData({ actionType: getActionTypes.ADD }))
   }
 
   return (
@@ -28,10 +28,10 @@ const SharezoneManager = () => {
           </Col>
         </div>
         <ShareZoneDetailView />
-        <ShareZoneInternalManager />
+        {/* <ShareZoneInternalManager /> */}
       </div>
 
-      {actionType === getActionTypes.SELECT && <ShareZoneModal />}
+      {(actionType === getActionTypes.ADD || actionType === getActionTypes.EDIT) && <ShareZoneModal />}
     </React.Fragment>
   )
 }

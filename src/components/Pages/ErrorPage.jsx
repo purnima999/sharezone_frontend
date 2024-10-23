@@ -15,7 +15,7 @@ export default function ErrorPage() {
           variantColor="cs_white_color"
         />
         <Spacing lg="30" md="30" />
-        <Button btnText="Back To Home" btnUrl="/" />
+        <Button btnText="Back To Signin" btnUrl="/signin" />
       </div>
     </div>
   );

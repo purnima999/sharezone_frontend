@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Table } from 'reactstrap';
-import { getZonesbyEmailIdRequest } from '../../../store/ShareZone/slice';
 import moment from 'moment';
-import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { Table } from 'reactstrap';
+import nodata from '../../../images/nodata.svg';
+import { deleteZoneRequest, editZoneDetailsRequest, getZonesbyEmailIdRequest } from '../../../store/ShareZone/slice';
+import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
+import { getActionTypes } from '../../../_mock/internalJsControl';
 
 const ShareZoneDetailView = () => {
     const dispatch = useDispatch();
@@ -21,9 +23,18 @@ const ShareZoneDetailView = () => {
         navigate("/sharezone_room")
     }
 
+
+    const editHandle = (selectedZone) => {
+        dispatch(setActionTypeAndActionData({ actionType: getActionTypes.EDIT, actionData: selectedZone }))
+    }
+
+    const deleteHandle = (id) => {
+        dispatch(deleteZoneRequest(id))
+    }
+
     return (
         <React.Fragment>
-            <div className='wflexScroll d-flex flex-column mb-2'>
+            {zoneData?.length > 0 && <div className='wflexScroll d-flex flex-column mb-2'>
                 <div className='flex-grow-1'>
                     <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
                         <thead className='sticky_header'>
@@ -72,8 +83,8 @@ const ShareZoneDetailView = () => {
                                             <td>
                                                 <div className='d-flex gap-2'>
                                                     <button type="button" className='al_button_sm al_savebtn'>Copy invite link</button>
-                                                    <button type="button" className='al_button_sm al_testbtn'>Edit</button>
-                                                    <button type="button" className="al_button_sm al_button_cancel">Delete</button>
+                                                    <button type="button" className='al_button_sm al_testbtn' onClick={() => editHandle(x)}>Edit</button>
+                                                    <button type="button" className="al_button_sm al_button_cancel" onClick={() => deleteHandle(x.id)}>Delete</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -83,7 +94,13 @@ const ShareZoneDetailView = () => {
                         </tbody>
                     </Table>
                 </div>
-            </div>
+            </div>}
+
+            {zoneData?.length === 0 && <div className="d-flex flex-column align-items-center pt-5">
+                <img src={nodata} width={220} alt="No data" />
+                <h6 className="mt-3 mb-0">No data found!</h6>
+            </div>}
+
         </React.Fragment >
     )
 }

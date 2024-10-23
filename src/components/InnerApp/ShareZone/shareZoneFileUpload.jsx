@@ -107,32 +107,34 @@ const ShareZoneFileUpload = () => { // Pass roomname as a prop or state
                 <div>{file?.name}</div>
                 <div className='wflexScroll d-flex flex-column mb-2'>
                     <div className='flex-grow-1'>
-                        {uploadedFiles && uploadedFiles.length > 0 ? <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
-                            <thead>
-                                <tr>
-                                    <th>Uploaded Files</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {uploadedFiles.map((file) => (
-                                    <tr key={file.filename}>
-                                        <td><div className='al_text_link d-inline-block'>{file.filename}</div></td>
-                                        <td>
-                                            <div className='d-flex gap-2'>
-                                                <button
-                                                    type="button"
-                                                    className='al_button_sm al_testbtn'
-                                                    onClick={() => handleFileDelete(file.filename)}
-                                                >
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        </td>
+                        {uploadedFiles && uploadedFiles.length > 0 ?
+                            <Table borderless responsive className='al_listtable pt-2 al-pad mb-0 al_approveusers'>
+                                <thead>
+                                    <tr>
+                                        <th>Uploaded Files</th>
+                                        <th>Actions</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </Table> :
+                                </thead>
+                                <tbody>
+                                    {uploadedFiles.map((file) => (
+                                        <tr key={"one"}>
+                                            <td><div className='al_text_link d-inline-block'>s00392-022-01996-2 (1).pdf</div></td>
+                                            <td>
+                                                <div className='d-flex gap-2'>
+                                                    <button
+                                                        type="button"
+                                                        className='al_button_sm al_testbtn'
+                                                    // onClick={() => handleFileDelete(file.filename)}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                            :
                             <div className="d-flex flex-column align-items-center pt-5">
                                 <img src={nodata} width={220} alt="No data" />
                                 <h6 className="mt-3 mb-0">No data found!</h6>

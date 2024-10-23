@@ -20,7 +20,8 @@ export const getActionTypes = {
     UNSELECT: 0,
     EDIT: 1,
     ISCONFIRM: 2,
-    SELECT: 3
+    SELECT: 3,
+    ADD: 4
 }
 
 // profile page sub componets 

@@ -1,24 +1,34 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Label, Modal, ModalBody } from 'reactstrap';
 import * as Yup from 'yup';
 import { getActionTypes } from '../../../_mock/internalJsControl';
-import { createZoneRequest } from '../../../store/ShareZone/slice';
+import { createZoneRequest, editZoneDetailsRequest } from '../../../store/ShareZone/slice';
 import { setActionTypeAndActionData } from '../../../store/UtilityCallFunction/slice';
 
 const ShareZoneModal = () => {
     const dispatch = useDispatch();
 
+    const { actionType, actionData } = useSelector((state) => (state?.utilityCallFunctionSlice));
+
     const handleModalClose = () => {
         dispatch(setActionTypeAndActionData({ actionType: getActionTypes.UNSELECT }))
     }
 
+    const handleSubmit = (values) => {
+        if (actionType === getActionTypes.ADD)
+            dispatch(createZoneRequest({ values }))
+        else
+            dispatch(editZoneDetailsRequest({ values, zoneid: actionData?.id }))
+    }
+
+    console.log("979879879879879879", actionData)
     return (
         <React.Fragment>
             <Formik
                 initialValues={{
-                    roomname: ""
+                    roomname: actionData ? actionData?.roomname : ""
                 }}
                 validationSchema={Yup.object().shape({
                     roomname: Yup.string().required("Room name is required")
@@ -26,7 +36,7 @@ const ShareZoneModal = () => {
                 onSubmit={(values) => {
                     console.log("submit=>", values);
                 }}
-            >{({ values,errors }) => (
+            >{({ values, errors }) => (
                 <>
                     <Form>
                         <Modal className='modal-sm detailsModal' isOpen={true} wrapClassName="al_outerparentwp">
@@ -60,7 +70,7 @@ const ShareZoneModal = () => {
                                         <button
                                             type="submit"
                                             className="al_button_add"
-                                            onClick={() => dispatch(createZoneRequest({ values }))}
+                                            onClick={() => handleSubmit(values)}
                                         >Save
                                         </button>
                                     </div>

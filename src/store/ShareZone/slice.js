@@ -13,7 +13,14 @@ const shareZoneSlice = createSlice({
             state.zoneData = action?.payload
         },
         initiateCallRequest: () => { },
-        uploadFilesRequest: () => { }
+        uploadFilesRequest: () => { },
+        editZoneDetailsRequest: () => { },
+        deleteZoneRequest: () => { },
+        fetchUploadedFilesRequest: () => { },
+        fetchUploadedFilesResponse: (state, action) => {
+            state.uploadedFiles = action?.payload
+        },
+        deleteUploadedFilesRequest: () => { },
     },
 });
 
@@ -22,7 +29,12 @@ export const {
     createZoneRequest,
     getZonesbyEmailIdRequest, getZonesbyEmailIdResponse,
     initiateCallRequest,
-    uploadFilesRequest
+    uploadFilesRequest,
+    editZoneDetailsRequest,
+    deleteZoneRequest,
+    fetchUploadedFilesRequest,
+    fetchUploadedFilesResponse,
+    deleteUploadedFilesRequest
 } = actions;
 
 export default reducer;
