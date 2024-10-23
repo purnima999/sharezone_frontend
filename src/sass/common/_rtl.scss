@@ -1,0 +1,94 @@
+[dir="rtl"] {
+    .al_menu_navigator {
+        right: 0;
+        left: inherit;
+        transition: right 0.3s ease-out;
+
+        .al_menus .navbar .menu-item>div span {
+            padding-right: 8px;
+            padding-left: 0;
+        }
+
+        .al_submenu {
+            padding-right: 1rem;
+            padding-left: 0;
+        }
+
+        &.al_slide_out {
+            right: -175px !important;
+            left: inherit;
+        }
+    }
+
+    .al_profilebtns {
+        button {
+            margin-right: 0;
+            margin-left: 10px;
+
+            i {
+                margin-right: 0;
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .ms-4 {
+        margin-left: 0 !important;
+        margin-right: 1.25rem;
+    }
+
+    .ms-2 {
+        margin-left: 0 !important;
+        margin-right: 0.5rem;
+    }
+
+    .me-2 {
+        margin-right: 0 !important;
+        margin-left: 0.5rem;
+    }
+
+    .al_profile_photo .al_profile-edit-icon {
+        left: 0;
+        right: inherit;
+    }
+
+    .input-group {
+        margin-left: 15px;
+        margin-right: 0;
+
+        &.me-0 {
+            margin-left: 0;
+            margin-right: 15px !important;
+        }
+
+        .input-group-text {
+            padding-left: 0;
+            padding-right: 0.75rem;
+            border-top-right-radius: 0.375rem !important;
+            border-bottom-right-radius: 0.375rem !important;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-control {
+            border-top-left-radius: 0.375rem !important;
+            border-bottom-left-radius: 0.375rem !important;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    .al_menu_navigator:not(.al_slide_out)~.al_right_container {
+        margin-right: 250px !important;
+    }
+
+    .al_site_container {
+        text-align: right !important;
+
+        .al_right_container {
+            margin-right: 75px !important;
+            margin-left: 0 !important;
+            transition: margin-right 0.3s ease-out;
+        }
+    }
+}

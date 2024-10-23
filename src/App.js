@@ -1,12 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import 'slick-carousel/slick/slick.css';
+import AllRoutes from "./routes";
+import './sass/index.scss';
 
-function App() {
+export default function App() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isAuthUser } = useSelector((state) => state?.registerSlice);
+
+
+  console.log("isAuthUserisAuthUser", isAuthUser)
+  // useEffect(() => {
+  // return () => {
+  // dispatch(setNonAuthSessionIdReuqest(""))
+  // }
+  // }, [])
+
   return (
-    <div className="App">
-      sharezone app
-    </div>
+    <AllRoutes
+      authenticated={isAuthUser}
+    />
   );
 }
-
-export default App;
